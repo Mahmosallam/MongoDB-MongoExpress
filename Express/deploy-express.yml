@@ -1,0 +1,22 @@
+metadata:
+  name: express
+spec:
+  replicas: 1
+  selector: 
+     matchLabels:
+       env: ex
+  template:
+    metadata:
+      labels:
+        env: ex
+    spec:
+      containers:
+        - name: express
+          image: mongo-express
+          ports:
+            - containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: express-config
+            - secretRef:
+                name: express-secret

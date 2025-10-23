@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-app
+spec:
+  replicas: 1
+  selector: 
+     matchLabels:
+       env: db
+  template:
+    metadata:
+      labels:
+        env: db
+    spec:
+      containers:
+       - name: mongo
+         image: mongo
+         ports:
+          - containerPort: 27017
+         envFrom:
+           - secretRef:
+               name: mongo-secret
+         volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/mongo
+      volumes:
+        - name: mongo-persistent-storage
+          persistentVolumeClaim:
+            claimName: pvc-mongo
