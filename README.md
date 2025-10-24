@@ -2,6 +2,9 @@
 
 Deploy a MongoDB database with persistent storage and a Mongo Express web UI on Kubernetes. This repo contains all manifests (Deployments, Services, ConfigMaps, Secrets, StorageClass, PVC) needed to run locally or on cloud clusters (AWS/EKS ready).
 
+<img width="1638" height="692" alt="Screenshot 2025-10-24 205421" src="https://github.com/user-attachments/assets/956662d3-5e7f-4a37-be9c-887f922de88b" />
+
+
 ## Project structure
 
 ```text
@@ -26,11 +29,6 @@ Deploy a MongoDB database with persistent storage and a Mongo Express web UI on 
 - Mongo Express official container image (`mongo-express`)
 - AWS EBS CSI driver (provisioner `ebs.csi.aws.com`) for dynamic volumes on EKS
 
-## Prerequisites
-- A working Kubernetes cluster and `kubectl` context set
-- For AWS/EKS: EBS CSI driver installed and IAM permissions configured
-  - Docs: `https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html`
-- For other environments (minikube/kind/AKS/GKE): update `mongodb/sc-mongo.yml` to a suitable provisioner or use your cluster's default StorageClass
 
 ## Configuration overview
 - MongoDB root credentials (base64-encoded in `mongodb/secret-mongo`):
@@ -126,6 +124,9 @@ MongoDB is cluster-internal at `mongo-service:27017`.
 - Pod stuck in `Pending` with PVC bound issues: ensure a compatible StorageClass exists and your CSI driver is installed.
 - Mongo Express shows auth/connection errors: verify that `ME_CONFIG_MONGODB_*` values match `mongo-secret` and that the Service name `mongo-service` is resolvable.
 - No external IP for `express-svc`: your cluster may not support `LoadBalancer`. Use port-forwarding or configure an Ingress/LoadBalancer controller.
+
+![MobaXterm_AMSdcxk57h](https://github.com/user-attachments/assets/2a588613-8890-459f-bda8-81e750f364be)
+
 
 ## Cleanup
 Delete resources (reverse order is safest):
